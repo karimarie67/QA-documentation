@@ -1,3 +1,8 @@
+## Table of Contents
+1. [Align with the Dev Team](#1-align-with-the-dev-team)
+2. [Define QA Scope & Strategy](#2-define-qa-scope--strategy)
+3. [Set QA Goals](#3-set-qa-goals)
+
 # C++ Alliance QA Plan: Month 1 - Foundation & Planning
 
 ## 1. Align with the Dev Team
