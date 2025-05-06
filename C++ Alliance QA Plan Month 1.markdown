@@ -1,11 +1,11 @@
 ## Table of Contents
-1. [Align with the Dev Team](#1-align-with-the-dev-team)
-2. [Define QA Scope & Strategy](#2-define-qa-scope--strategy)
-3. [Set QA Goals](#3-set-qa-goals)
+1. [Align with the Dev Team](align-with-the-dev-team)
+2. [Define QA Scope & Strategy](define-qa-scope--strategy)
+3. [Set QA Goals](set-qa-goals)
 
 # C++ Alliance QA Plan: Month 1 - Foundation & Planning
 
-## 1. Align with the Dev Team
+## Align with the Dev Team
 
 ### Objectives
 - Map out the current *CI/CD process*.
@@ -29,7 +29,7 @@
 
 ---
 
-## 2. Define QA Scope & Strategy
+## Define QA Scope & Strategy
 
 ### Integration with CI/CD
 - **Placement**: QA to include *pre-merge checks* and *post-deploy validation*.
@@ -66,8 +66,10 @@
   - Document findings and share with the team.
 ---
 
-## 3. Set QA Goals
-
-1. **Catch Critical Bugs**: Identify and resolve *critical issues* before they reach production.
-2. **Stable Deploys**: Ensure *predictable and reliable* deployments.
-3. **Automated Checks**: Develop *basic automated tests* that run on every *commit* or *pull request* for rapid feedback.
+### QA Goals
+1. **Catch Critical Bugs**:
+   - Reduce post-deployment bugs by 20% within the first quarter.
+2. **Stable Deploys**:
+   - Ensure 90% of deployments complete without rollbacks.
+3. **Automated Checks**:
+   - Implement basic automated tests by the end of Month 2.
