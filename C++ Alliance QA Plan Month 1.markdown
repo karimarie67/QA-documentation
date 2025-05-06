@@ -55,8 +55,15 @@
 
 ### Automation Exploration
 - **Tool**: Evaluating *Playwright* for test automation.
-- **Status**: *Research in progress*, as Playwright is new to the team. See [Playwright Documentation](https://playwright.dev/).
-
+- **Benefits**:
+  - Enables end-to-end testing across browsers.
+  - Easy integration with CI/CD pipelines.
+- **Limitations**:
+  - Requires initial setup and team training.
+  - Limited support for legacy systems.
+- **Next Steps**:
+  - Create a proof of concept to validate Playwright's feasibility.
+  - Document findings and share with the team.
 ---
 
 ## 3. Set QA Goals
