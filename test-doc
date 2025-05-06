@@ -1,0 +1,59 @@
+# QA Implementation Plan: Month 1 - Foundation & Planning
+
+## 1. Align with the Dev Team
+
+### Objectives
+- Map out the current CI/CD process.
+- Understand sprint cadence and deployment frequency.
+- Identify pain points in the development and deployment process.
+
+### Current CI/CD Process
+- **Tooling**: Primarily using GitHub Actions.
+- **Reference**: See [Workflow Mappings](#) for detailed process maps.
+  
+### Sprint Cadence & Deployment Frequency
+- **Sprint Cadence**: No defined sprint cadence currently.
+- **Deployments**:
+  - Typically scheduled on Mondays, in the afternoon or after hours, to minimize weekend disruptions.
+  - Deployment timing or day may adjust based on release needs or scheduling conflicts.
+  - **Constraint**: Production lockdown for one month before a Boost release, requiring schedule adjustments.
+
+### Pain Points
+- **Lack of QA**: No dedicated QA process, leading to post-deployment issues.
+- **Outdated Documentation**: Setup documentation is not current, causing onboarding and process inefficiencies.
+
+---
+
+## 2. Define QA Scope & Strategy
+
+### Integration with CI/CD
+- **Placement**: QA to include pre-merge checks and post-deploy validation.
+- **Reference**: See [CI/CD Section](#) for detailed integration plans.
+
+### Testing Types & Prioritization
+- **Functional Testing**: Core focus to ensure features work as expected. See [Functional Test Cases](#).
+- **Smoke Testing**: Validate critical functionality post-deploy.
+- **Regression Testing**: Ensure new changes don’t break existing features.
+- **User Acceptance Testing (UAT)**:
+  - Currently not implemented.
+  - Plan: Organize and establish a UAT process in collaboration with the team.
+
+### Testing Approach
+- **Shift-Left Testing**: Emphasize early and frequent testing to catch issues before they reach production.
+  - Discussions started on testing individual tickets in local environments before merging to staging.
+- **Environments**:
+  - Current: Only two environments—Staging (AKA Develop) and Master.
+  - **Action Item**: Draft a proposal for introducing a third environment to improve testing workflows.
+
+### Automation Exploration
+- **Tool**: Considering Playwright for test automation.
+- **Status**: Research underway, as Playwright is new to the team.
+
+---
+
+## 3. Set QA Goals
+
+### Primary Objectives
+- **Catch Critical Bugs**: Identify and resolve critical issues before they reach production.
+- **Stable Deploys**: Ensure deployments are predictable and reliable.
+- **Automated Checks**: Implement basic automated tests that run on every commit or pull request to provide fast feedback.
