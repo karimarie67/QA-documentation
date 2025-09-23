@@ -1,0 +1,32 @@
+DEMO SCRIPT - QA Automation Framework
+
+INTRO (1 min)
+"I've implemented a shift-left testing strategy with automated CI/CD. 
+Tests run automatically and results appear in a live dashboard."
+
+PART 1: Show the Strategy (2 min)
+- Navigate to: docs/Testing-Strategy.md
+- "Smoke tests on every PR for fast feedback"
+- "Regression tests on develop for comprehensive validation"
+- "This is how industry leaders like Google do testing"
+
+PART 2: Live Dashboard (3 min)
+- Navigate to: dashboards/qa-metrics.md
+- Point out: real test results, pass rates, trends
+- "Updates automatically after every test run"
+- "Currently 85% through our 3-month SOW"
+
+PART 3: Automation in Action (3 min)
+- Go to Actions tab
+- Show the develop branch run (currently executing)
+- "Tests run automatically on code changes"
+- Click into smoke tests, show execution
+- "Regression tests run after merge to develop"
+
+PART 4: Manual Trigger (2 min)
+- Actions → "Run workflow"
+- "Can test on-demand, choose environment"
+- "Staging or production, smoke or full suite"
+
+CLOSING (1 min)
+"Complete automation, 97%+ pass rate, production-ready"
