@@ -1,0 +1,10 @@
+#!/bin/sh
+dir=$(cd -- "$(dirname -- "$0")" && pwd)
+# shellcheck source=/dev/null
+. "$dir/_atlas_python.sh"
+if [ -z "$ATLAS_PYTHON" ]; then
+  echo "BLOCKED: .githooks/pre-commit found no working Python interpreter (tried python3, py -3, python)" >&2
+  exit 1
+fi
+# shellcheck disable=SC2086
+exec $ATLAS_PYTHON "$dir/pre-commit.py" "$@"

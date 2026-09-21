@@ -202,3 +202,25 @@ This QA framework demonstrates:
   <strong>Built for demonstrating professional QA automation</strong><br>
   <sub>Automated testing • Real-time metrics • Continuous improvement</sub>
 </p>
+
+<!-- atlas-v3:readme:start -->
+## Atlas
+
+This repo uses Atlas, a Claude Code plugin that acts as a shared path for AI-assisted development — generated, customizable policies, guidelines, and guardrails that keep agent-driven work safe and consistent without locking teams into one rigid workflow. Read [`docs/atlas-operators-guide.md`](./docs/atlas-operators-guide.md) for how to work in this repo, in plain language, and the **Atlas** section in [`CLAUDE.md`](./CLAUDE.md) for the policy the agents follow.
+
+**Before working in this repo:**
+
+1. **Activate git hooks** (one-time, per clone):
+
+   ```bash
+
+   git config core.hooksPath .githooks
+
+   ```
+
+   These block a handful of destructive git operations before they run.
+
+2. **Claude Code hooks** are already configured in `.claude/settings.json` — they guard against risky file, shell, and MCP actions during agent sessions. See `docs/agents/guardrails.md` if you need to change them.
+
+Everything Atlas generated here — hooks, the `CLAUDE.md` section, `docs/agents/` — is a **base recommendation**, not fixed policy. Adapt it to this project's actual needs and processes.
+<!-- atlas-v3:readme:end -->

@@ -1,0 +1,198 @@
+{
+  "atlas_version": "0.1.0",
+  "cloud_tools": [],
+  "customized_files": {},
+  "guardrails_mode": "full",
+  "guardrails_off_authorization": null,
+  "hook_activation": {
+    "decision": "standard",
+    "hook_managers": [],
+    "preexisting_hooks_path": ""
+  },
+  "human_only_state_ids": [],
+  "human_only_states": [
+    "In QA",
+    "Done"
+  ],
+  "managed_files": {
+    ".claude/hooks/atlas/atlas_guard/__init__.py": "e11bad37d3d51c96e370774dcd100457d2acbda561ac4ab5284bb7066e49dbee",
+    ".claude/hooks/atlas/atlas_guard/cloud_policy.py": "b803a4ad7ee91d67936460659c749e4c0718fd478a1a10966a3b20f2893656d0",
+    ".claude/hooks/atlas/atlas_guard/config.py": "d73dabfabecd0d7603e2aa2b1ba7081718e662c9cfaff4fa13553744104af98e",
+    ".claude/hooks/atlas/atlas_guard/engine.py": "a19ba0d6a5df62fe419d2037f3817e72b9fb2e9000130c15035b25c6689a082b",
+    ".claude/hooks/atlas/atlas_guard/file_policy.py": "3e9a1f3ceb220178e1f995f9f4d93afa065fd641ceabaf08a752e2c5a5985726",
+    ".claude/hooks/atlas/atlas_guard/git_policy.py": "ddf275f43cd6d9657078016a8cd1daa387db48379897bd59c8f61203feee8e38",
+    ".claude/hooks/atlas/atlas_guard/host_policy.py": "d36aa22b7dc20442cc9dc7dbc1ab283b31a11dbb8fadfade435b8f2394272ec4",
+    ".claude/hooks/atlas/atlas_guard/mcp_policy.py": "3d610d49ff1b1684c94120b0aa929a80554443bb6f6e74d8a24710561bc6bb1f",
+    ".claude/hooks/atlas/atlas_guard/secrets.py": "6e3b13f6688bff5a5a34b4f1aa74733cff808e460151b8123fe703adfeacfca9",
+    ".claude/hooks/atlas/atlas_guard/self_protection.py": "345f736d885205c4aee9b181f48d87f7524923ce7b8792b8473ca88a8612cb11",
+    ".claude/hooks/atlas/atlas_guard/self_test.py": "4f4aff1a8e6f08280d66b07b68299d6327c4cbb3a2787dfa4cbb9aa0e0af19f4",
+    ".claude/hooks/atlas/atlas_guard/shell_policy.py": "534860d997313fad3ef7b0bc1bfdf793ded830ee040faaf12d0d9eb8a1d2fc02",
+    ".claude/hooks/atlas/atlas_guard/shell_syntax.py": "a2bbf9205694c25e845e55a7a2f89d4a418e326fcf459b8c34a033034aea748d",
+    ".claude/hooks/atlas/guard.py": "91c3a9fd98c67f6f6f093c59c2e6da84521395ad3b98b8ea0654b787883feccd",
+    ".githooks/_atlas_python.sh": "2a5d3f2065e65e279079be1d7e37ccaaa8d869e92ea69e4d054d5c30c89944a0",
+    ".githooks/commit-msg": "29b92c11377090e614229f801da18cd7fd2f6015bc0e826b12ef38a90c18fa75",
+    ".githooks/commit-msg.py": "9992fe651785848ccf6ceb081c9506d900d19dfed04f0343058b9091c9c20572",
+    ".githooks/pre-commit": "ac5902b1ff02dc75299d5a201f6abc7bc1ab98cac80f18763511da52e3527247",
+    ".githooks/pre-commit.py": "a1cc447ea2e048959aaa22d1d7ea4cb8751b0894940b8886a07cf6e1bb438716",
+    ".githooks/pre-push": "78c1c1e52876a717249c0fe7db1b4cff1a3917e25775f4e23a8fe53adaa0bc2c",
+    ".githooks/pre-push.py": "3980391a8c7f726a17153f840746c3e7ecb9165aa6baa69e33785d518f4760fe",
+    ".gitleaks.toml": "8949107afc32e2f3412992b4e40e67e2ad779b9a154eb54dac8395b3ddd232a9"
+  },
+  "managed_sections": {
+    ".gitattributes": "gitattributes",
+    ".gitignore": "gitignore",
+    "CLAUDE.md": "guidance",
+    "README.md": "readme",
+    "docs/agents/guardrails.md": "guardrails",
+    "docs/agents/issue-tracker.md": "tracker",
+    "docs/agents/planning.md": "planning",
+    "docs/agents/testing.md": "testing",
+    "docs/agents/tooling.md": "tooling",
+    "docs/atlas-operators-guide.md": "operators-guide"
+  },
+  "mattpocock_skills_marketplace": "claude-plugins-official",
+  "mattpocock_skills_tested": "1.2.0",
+  "repositories": [
+    {
+      "id": "QA-documentation",
+      "path": ".",
+      "protected_branches": [
+        "main",
+        "develop",
+        "master"
+      ]
+    }
+  ],
+  "section_provenance": {
+    ".gitattributes": "ee2483103e4535a08218c30d2d183f93e748055fe4e49383b9b1696c0ab92c41",
+    ".gitignore": "51662d61f56fc55514c50fbc54f5990fb61140503f2ea54d143c848559e2e6f8",
+    "CLAUDE.md": "d99fb1d6634d981108532b8567e52b2b1110a6d889075d7137455e205402eb3c",
+    "README.md": "6a49880f39ac6f0c7e04d6ecd5b56afe95a13732a40554db1d0cf61dce6ef71a",
+    "docs/agents/guardrails.md": "8bab5a2035292125eee5dc048f11ae22d3fae3816d350f13e205cbeaaa7d7715",
+    "docs/agents/issue-tracker.md": "fa6782b583d4ad08ada1123f801c0a6b4eb7e0469b868bd70b9a2fa154703ebc",
+    "docs/agents/planning.md": "1a8b0836a88d4fec1dc062a45abc62beebab195cfae60a5923347aa6ab17b343",
+    "docs/agents/testing.md": "faa98a9a991736e0977a3e26a4cb1b10d45b34b34fb65be68662e1bd82409348",
+    "docs/agents/tooling.md": "2a62cf0b4cec3333c9b2595dd720b0df7a7a64b9f51a9a1d7f57cdb8201ea6b6",
+    "docs/atlas-operators-guide.md": "9f909a4b53c9911de65d7c0c2377819e363c5cdd3d1d08d50cc22c303ab608c6"
+  },
+  "settings_provenance": {
+    "hooks": {
+      "PreToolUse": [
+        {
+          "commands": [
+            "if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" file; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if py -3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then py -3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" file; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if python -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" file; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; echo 'Atlas guardrail could not start: no working Python interpreter' >&2; exit 2"
+          ],
+          "matcher": "Read|Edit|Write|NotebookEdit|Grep|Glob"
+        },
+        {
+          "commands": [
+            "if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" bash; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if py -3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then py -3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" bash; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if python -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" bash; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; echo 'Atlas guardrail could not start: no working Python interpreter' >&2; exit 2"
+          ],
+          "matcher": "Bash"
+        },
+        {
+          "commands": [
+            "if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" mcp; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if py -3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then py -3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" mcp; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if python -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" mcp; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; echo 'Atlas guardrail could not start: no working Python interpreter' >&2; exit 2"
+          ],
+          "matcher": "mcp__.*"
+        }
+      ]
+    },
+    "permissions": {
+      "ask": [
+        "Edit(CLAUDE.md)",
+        "Bash(git worktree remove*)",
+        "Edit(.atlas/manifest.json)",
+        "Edit(.claude/worktrees/*/*/.atlas/manifest.json)",
+        "Edit(.claude/hooks/**)",
+        "Edit(.claude/worktrees/*/*/.claude/hooks/**)",
+        "Edit(.claude/settings.json)",
+        "Edit(.claude/worktrees/*/*/.claude/settings.json)",
+        "Edit(.githooks/**)",
+        "Edit(.claude/worktrees/*/*/.githooks/**)",
+        "Edit(assets/scaffold/.claude/hooks/**)",
+        "Edit(assets/scaffold/.githooks/**)"
+      ],
+      "deny": [
+        "Bash(git push --force*)",
+        "Bash(git push -f*)",
+        "Bash(git push --no-verify*)",
+        "Bash(git commit --no-verify*)",
+        "Bash(gh pr merge*)",
+        "Bash(glab mr merge*)",
+        "Bash(cdk deploy*)",
+        "Bash(*cdk deploy*)",
+        "Bash(cdk destroy*)",
+        "Bash(*cdk destroy*)",
+        "Bash(helm delete*)",
+        "Bash(*helm delete*)",
+        "Bash(helm install*)",
+        "Bash(*helm install*)",
+        "Bash(helm rollback*)",
+        "Bash(*helm rollback*)",
+        "Bash(helm uninstall*)",
+        "Bash(*helm uninstall*)",
+        "Bash(helm upgrade*)",
+        "Bash(*helm upgrade*)",
+        "Bash(kubectl apply*)",
+        "Bash(*kubectl apply*)",
+        "Bash(kubectl cordon*)",
+        "Bash(*kubectl cordon*)",
+        "Bash(kubectl create*)",
+        "Bash(*kubectl create*)",
+        "Bash(kubectl delete*)",
+        "Bash(*kubectl delete*)",
+        "Bash(kubectl drain*)",
+        "Bash(*kubectl drain*)",
+        "Bash(kubectl edit*)",
+        "Bash(*kubectl edit*)",
+        "Bash(kubectl patch*)",
+        "Bash(*kubectl patch*)",
+        "Bash(kubectl replace*)",
+        "Bash(*kubectl replace*)",
+        "Bash(kubectl scale*)",
+        "Bash(*kubectl scale*)",
+        "Bash(kubectl set*)",
+        "Bash(*kubectl set*)",
+        "Bash(kubectl taint*)",
+        "Bash(*kubectl taint*)",
+        "Bash(terraform apply*)",
+        "Bash(*terraform apply*)",
+        "Bash(terraform destroy*)",
+        "Bash(*terraform destroy*)",
+        "Bash(terraform import*)",
+        "Bash(*terraform import*)",
+        "Bash(terraform taint*)",
+        "Bash(*terraform taint*)",
+        "Bash(terraform untaint*)",
+        "Bash(*terraform untaint*)",
+        "Bash(terragrunt apply*)",
+        "Bash(*terragrunt apply*)",
+        "Bash(terragrunt destroy*)",
+        "Bash(*terragrunt destroy*)",
+        "Bash(terragrunt import*)",
+        "Bash(*terragrunt import*)",
+        "Bash(terragrunt taint*)",
+        "Bash(*terragrunt taint*)",
+        "Bash(terragrunt untaint*)",
+        "Bash(*terragrunt untaint*)",
+        "Bash(tofu apply*)",
+        "Bash(*tofu apply*)",
+        "Bash(tofu destroy*)",
+        "Bash(*tofu destroy*)",
+        "Bash(tofu import*)",
+        "Bash(*tofu import*)",
+        "Bash(tofu taint*)",
+        "Bash(*tofu taint*)",
+        "Bash(tofu untaint*)",
+        "Bash(*tofu untaint*)",
+        "Bash(git push origin main*)",
+        "Bash(git push -u origin main*)",
+        "Bash(git push origin develop*)",
+        "Bash(git push -u origin develop*)",
+        "Bash(git push origin master*)",
+        "Bash(git push -u origin master*)"
+      ]
+    }
+  }
+}

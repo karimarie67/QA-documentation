@@ -1,0 +1,135 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" file; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if py -3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then py -3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" file; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if python -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" file; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; echo 'Atlas guardrail could not start: no working Python interpreter' >&2; exit 2",
+            "shell": "bash",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Read|Edit|Write|NotebookEdit|Grep|Glob"
+      },
+      {
+        "hooks": [
+          {
+            "command": "if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" bash; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if py -3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then py -3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" bash; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if python -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" bash; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; echo 'Atlas guardrail could not start: no working Python interpreter' >&2; exit 2",
+            "shell": "bash",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "Bash"
+      },
+      {
+        "hooks": [
+          {
+            "command": "if python3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" mcp; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if py -3 -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then py -3 -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" mcp; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; if python -c 'import sys; sys.exit(0 if sys.version_info >= (3, 9) else 1)' </dev/null >/dev/null 2>&1; then python -B \"$CLAUDE_PROJECT_DIR/.claude/hooks/atlas/guard.py\" mcp; rc=$?; if [ \"$rc\" -ne 0 ]; then echo 'Atlas guardrail failed to run (exit '\"$rc\"')' >&2; exit 2; fi; exit 0; fi; echo 'Atlas guardrail could not start: no working Python interpreter' >&2; exit 2",
+            "shell": "bash",
+            "timeout": 5,
+            "type": "command"
+          }
+        ],
+        "matcher": "mcp__.*"
+      }
+    ]
+  },
+  "permissions": {
+    "ask": [
+      "Edit(CLAUDE.md)",
+      "Bash(git worktree remove*)",
+      "Edit(.atlas/manifest.json)",
+      "Edit(.claude/worktrees/*/*/.atlas/manifest.json)",
+      "Edit(.claude/hooks/**)",
+      "Edit(.claude/worktrees/*/*/.claude/hooks/**)",
+      "Edit(.claude/settings.json)",
+      "Edit(.claude/worktrees/*/*/.claude/settings.json)",
+      "Edit(.githooks/**)",
+      "Edit(.claude/worktrees/*/*/.githooks/**)",
+      "Edit(assets/scaffold/.claude/hooks/**)",
+      "Edit(assets/scaffold/.githooks/**)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push --no-verify*)",
+      "Bash(git commit --no-verify*)",
+      "Bash(gh pr merge*)",
+      "Bash(glab mr merge*)",
+      "Bash(cdk deploy*)",
+      "Bash(*cdk deploy*)",
+      "Bash(cdk destroy*)",
+      "Bash(*cdk destroy*)",
+      "Bash(helm delete*)",
+      "Bash(*helm delete*)",
+      "Bash(helm install*)",
+      "Bash(*helm install*)",
+      "Bash(helm rollback*)",
+      "Bash(*helm rollback*)",
+      "Bash(helm uninstall*)",
+      "Bash(*helm uninstall*)",
+      "Bash(helm upgrade*)",
+      "Bash(*helm upgrade*)",
+      "Bash(kubectl apply*)",
+      "Bash(*kubectl apply*)",
+      "Bash(kubectl cordon*)",
+      "Bash(*kubectl cordon*)",
+      "Bash(kubectl create*)",
+      "Bash(*kubectl create*)",
+      "Bash(kubectl delete*)",
+      "Bash(*kubectl delete*)",
+      "Bash(kubectl drain*)",
+      "Bash(*kubectl drain*)",
+      "Bash(kubectl edit*)",
+      "Bash(*kubectl edit*)",
+      "Bash(kubectl patch*)",
+      "Bash(*kubectl patch*)",
+      "Bash(kubectl replace*)",
+      "Bash(*kubectl replace*)",
+      "Bash(kubectl scale*)",
+      "Bash(*kubectl scale*)",
+      "Bash(kubectl set*)",
+      "Bash(*kubectl set*)",
+      "Bash(kubectl taint*)",
+      "Bash(*kubectl taint*)",
+      "Bash(terraform apply*)",
+      "Bash(*terraform apply*)",
+      "Bash(terraform destroy*)",
+      "Bash(*terraform destroy*)",
+      "Bash(terraform import*)",
+      "Bash(*terraform import*)",
+      "Bash(terraform taint*)",
+      "Bash(*terraform taint*)",
+      "Bash(terraform untaint*)",
+      "Bash(*terraform untaint*)",
+      "Bash(terragrunt apply*)",
+      "Bash(*terragrunt apply*)",
+      "Bash(terragrunt destroy*)",
+      "Bash(*terragrunt destroy*)",
+      "Bash(terragrunt import*)",
+      "Bash(*terragrunt import*)",
+      "Bash(terragrunt taint*)",
+      "Bash(*terragrunt taint*)",
+      "Bash(terragrunt untaint*)",
+      "Bash(*terragrunt untaint*)",
+      "Bash(tofu apply*)",
+      "Bash(*tofu apply*)",
+      "Bash(tofu destroy*)",
+      "Bash(*tofu destroy*)",
+      "Bash(tofu import*)",
+      "Bash(*tofu import*)",
+      "Bash(tofu taint*)",
+      "Bash(*tofu taint*)",
+      "Bash(tofu untaint*)",
+      "Bash(*tofu untaint*)",
+      "Bash(git push origin main*)",
+      "Bash(git push -u origin main*)",
+      "Bash(git push origin develop*)",
+      "Bash(git push -u origin develop*)",
+      "Bash(git push origin master*)",
+      "Bash(git push -u origin master*)"
+    ]
+  }
+}
