@@ -43,3 +43,93 @@ Used by `/wayfinder`. The **map** is a single issue with **child** issues as tic
 - **Frontier query**: list the map's open children (`gh issue list --state open`, scoped to the map's sub-issues / task list), drop any with an open blocker (`issue_dependencies_summary.blocked_by > 0`, or an open issue in the `Blocked by` line) or an assignee; first in map order wins.
 - **Claim**: `gh issue edit <n> --add-assignee @me`, the session's first write.
 - **Resolve**: `gh issue comment <n> --body "<answer>"`, then `gh issue close <n>`, then append a context pointer (gist + link) to the map's Decisions-so-far.
+
+## Atlas lifecycle contract
+
+<!-- atlas-v3:tracker:start -->
+# Issue tracker
+
+Tracker type: **github**.
+
+This document is the authoritative repository policy for tracker reads, writes,
+readiness, availability, claims, ownership, transitions, human-only actions,
+and planning-artifact publication.
+
+## States
+
+| State | Meaning |
+|---|---|
+| `Backlog` | New issue captured, not yet scoped or prioritized |
+| `To Do` | Scoped and queued; used for both planning and plan-review phases (differentiated by comment) |
+| `In Progress` | Implementation active; used for both build and Atlas self-review phases (differentiated by comment) |
+| `In QA` | QA tester verifying the fix against repro steps; human-only transition |
+| `Done` | QA verified the fix and closed the issue; human-only transition |
+
+Human-only states: `In QA`, `Done`.
+
+Recommended lifecycle: `Backlog` → `To Do` → `In Progress` → `In QA` → `Done`.
+
+## Read and write rules
+
+- Read the complete ticket and comments before planning or implementation.
+- Check for available work before claiming. Available work is ready to
+  implement, unclaimed, in an eligible state, has no active impediment or
+  blocking decision, and every `blocked by` ticket is in
+  `Done`. A dependency that is not a `blocked by` edge does
+  not make work unavailable.
+- Claim before starting work and use one active owner. Enter
+  `Backlog` only when starting any work.
+- Enter `To Do` only when planning starts and
+  `To Do` only when the plan is ready for review.
+- Enter `In Progress` only when implementation starts.
+- Enter `In Progress` only when aggregate AI code review starts.
+- Record blocks, approved scope changes, proof of work, and the PR URL.
+- Enter `In QA` only after verification and PR creation.
+- Compare the next Atlas phase with the last-known tracker state from the
+  initial ticket read or most recent successful transition. Do not fetch the
+  ticket solely for this comparison. When both map to the same state, record
+  the phase in its configured phase record or comment without requesting a
+  same-status transition.
+- Never enter `Done`; a human does that after reviewing the PR.
+- When blocked, preserve work, record the exact reason and resume instructions,
+  and follow the configured blocked-state behavior. On resume, reread the ticket
+  and avoid duplicating claims, transitions, workers, commits, or comments.
+- Planning artifact storage: **tracker**.
+- Drafts before approval: **true**.
+- Preview exact plan writes and transitions before publishing them. If drafts
+  are not permitted, return the draft without presenting it as tracker state.
+- Preserve stable ticket/spec requirements. Record evolving execution in
+  `[EXECUTION PLAN]`, `[PROGRESS]`, `[SCOPE CHANGE]`, `[BLOCKED]`,
+  `[AI CODE REVIEW]`, and `[CLOSEOUT]` records rather than silently rewriting
+  the contract. Write the complete AI Code Review output to the ticket before
+  entering `In QA`.
+
+Before creating, classifying, prioritizing, or decomposing tickets, also read
+and follow `docs/agents/triage-labels.md`. Do not infer labels or priority from
+this document.
+
+## Readiness
+
+Ready to plan: Issue uses the bug_report, QA_finding, or feature_request template with required fields filled in (repro steps, expected/actual behavior, or test objective), and sits in Backlog or To Do.
+
+Ready to implement: Issue is in To Do, has a test case reference or clear acceptance criteria, and is assigned to a developer.
+
+Available to claim: Issue is open, unassigned, sits in Backlog or To Do, and has no open 'Blocked by' reference or linked open blocker.
+
+## Sources and pull requests
+
+| Repository | Path | Source host | Base branch | PR creation command |
+|---|---|---|---|---|
+| `QA-documentation` | `.` | github | `main` | `gh pr create --base main --head <feature-branch>` |
+
+Open one PR per affected repository.
+
+The tracker and source host may differ. Never infer tracker operations from the
+source host.
+
+## Atlas closeout record
+
+Record every repository delivery, deliverable and worker/model, each DoD
+outcome and evidence, deviations, verified run command, deployed smoke when
+applicable, every PR URL, and the AI Code Review output.
+<!-- atlas-v3:tracker:end -->

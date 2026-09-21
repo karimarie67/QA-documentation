@@ -1,0 +1,22 @@
+[extend]
+useDefault = true
+
+# `condition = "AND"` is load-bearing: gitleaks ORs allowlist criteria by
+# default, so without it the `paths` entry alone would exempt every
+# generic-api-key finding anywhere in the manifest.
+#
+# Requires gitleaks v8.25.0 (2025-04-29). `[[allowlists]]`, `condition`, and
+# `targetRules` all landed together in PR #1777, so an older gitleaks does not
+# recognize the block at all and drops it whole: the manifest hashes go back to
+# being flagged. Noisy, never a silently weakened scan. v8.26.0 fixed PR #1845,
+# where evaluation could return before testing every allowlist; that only bites
+# configs with more than one entry, so raise this floor to v8.26.0 before adding
+# a second `[[allowlists]]`.
+[[allowlists]]
+description = "Atlas manifest stores sha256 content hashes of managed files, never secrets. A hash sitting next to a filename that looks sensitive (for example secrets.py) trips the generic-api-key heuristic. Narrowed to that one rule, that one file, and the bare 64-character lowercase hex shape, all three at once. Every other default rule still applies to the manifest, and any credential there that is not exactly a sha256 hash is still caught."
+targetRules = ["generic-api-key"]
+condition = "AND"
+regexes = ['''^[a-f0-9]{64}$''']
+paths = [
+'''(^|/)\.atlas/manifest\.json$''',
+]
