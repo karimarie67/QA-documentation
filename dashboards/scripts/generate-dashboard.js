@@ -3,11 +3,9 @@ const path = require('path');
 
 // --- CONFIGURATION: QUALITY GATES ---
 const QUALITY_GATES = {
-  SMOKE_TARGET: 100,      
-  REGRESSION_TARGET: 95,  
-  VERSION_TARGET: 98,     
-  FUNCTIONAL_TARGET: 95,  
-  MAX_DURATION_SEC: 600   
+  SMOKE_TARGET: 100,
+  FUNCTIONAL_TARGET: 95,
+  MAX_DURATION_SEC: 600
 };
 
 const ARTIFACTS_DIR = path.join(__dirname, '../../artifacts');
@@ -43,7 +41,7 @@ function main() {
   // --- SLACK PAYLOAD ---
   if (metrics.failed > 0 || trends.flakyTests.length > 0) {
     const slackPayload = {
-      text: `🚨 **Boost.org QA Alert**`,
+      text: `🚨 **QA Alert**`,
       blocks: [
         {
           type: "section",
@@ -61,12 +59,10 @@ function main() {
 }
 
 function collectTestResults() {
-  const results = { smoke: [], regression: [], version: [], functional: [] };
-  
+  const results = { smoke: [], functional: [] };
+
   const files = {
-    smoke: path.join(ARTIFACTS_DIR, 'smoke-test-results/smoke-results.json'),
-    regression: path.join(ARTIFACTS_DIR, 'boost-io-test-results/boost-io-results.json'),
-    version: path.join(ARTIFACTS_DIR, 'version-test-results/version-results.json')
+    smoke: path.join(ARTIFACTS_DIR, 'smoke-test-results/smoke-results.json')
   };
 
   const functionalFiles = [
@@ -97,10 +93,10 @@ function collectTestResults() {
   });
   
   if (Object.values(results).every(arr => arr.length === 0)) {
-    console.warn("⚠️ No artifacts found. Generating SAMPLE data for preview.");
-    return getSampleResults();
+    console.warn("⚠️ No artifacts found. Dashboard will show a 'no data' state.");
+    return results;
   }
-  
+
   return results;
 }
 
@@ -144,9 +140,7 @@ function parsePlaywrightJson(filepath) {
 
 function calculateMetrics(results) {
   const allTests = [
-    ...results.smoke, 
-    ...results.regression, 
-    ...results.version, 
+    ...results.smoke,
     ...results.functional
   ];
 
@@ -162,8 +156,6 @@ function calculateMetrics(results) {
     passRate: allTests.length > 0 ? (passed / allTests.length) * 100 : 0,
     totalDuration: totalDuration,
     smokeCount: results.smoke.length,
-    regressionCount: results.regression.length,
-    versionCount: results.version.length,
     functionalCount: results.functional.length,
     allTestObjects: allTests, 
     timestamp: new Date().toISOString(),
@@ -241,7 +233,7 @@ function generateDashboardMarkdown(metrics, results, history, trends) {
   const timestamp = new Date().toLocaleString('en-US', { timeZone: 'America/New_York', dateStyle: 'full', timeStyle: 'short' });
   const durationText = `${formatDuration(metrics.totalDuration)}`;
 
-  return `# 📊 QA Metrics Dashboard - Boost.org
+  return `# 📊 QA Metrics Dashboard
 
 > **Automated Quality Gate Report**
 
@@ -272,12 +264,6 @@ ${generateTestTable(results.smoke)}
 
 ### 🧩 Functional Tests (Errors, Docs, Search)
 ${generateTestTable(results.functional)}
-
-### 🔄 Regression Tests
-${generateTestTable(results.regression)}
-
-### 📦 Version Tests
-${generateTestTable(results.version)}
 
 ---
 
@@ -348,18 +334,6 @@ function generateHistoryTable(history) {
     const passRate = parseFloat(entry.passRate).toFixed(1);
     return `| ${date} | ${passRate}% | ${dur} | ${entry.failed} |`;
   }).join('\n');
-}
-
-function getSampleResults() {
-  return {
-    smoke: [{ name: 'Homepage loads', status: 'passed', durationSec: 1.2, projectName: 'chromium' }],
-    regression: [{ name: 'Boost.io accessible', status: 'passed', durationSec: 1.5, projectName: 'chromium' }],
-    functional: [ 
-      { name: 'Search returns results', status: 'passed', durationSec: 0.5, projectName: 'chromium' },
-      { name: '404 page checks', status: 'passed', durationSec: 0.8, projectName: 'chromium' }
-    ],
-    version: [{ name: 'Version compatibility check', status: 'passed', durationSec: 1.0, projectName: 'Default' }]
-  };
 }
 
 main();
