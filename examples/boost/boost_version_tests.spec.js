@@ -1,9 +1,9 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
-import { testPatterns, testElementVisibility, findVisibleElement } from '../test-helpers.js';
-import { buildURL, testData, urlPatterns, expectedUrlPatterns } from '../config-helper.js';
-import { selectors } from '../selectors.js';
-import { logAndScreenshot } from '../utils.js';
+import { testPatterns, testElementVisibility, findVisibleElement } from '../../test-helpers.js';
+import { buildURL, testData, urlPatterns, expectedUrlPatterns } from '../../config-helper.js';
+import { selectors } from '../../selectors.js';
+import { logAndScreenshot } from '../../utils.js';
 
 test.describe('Boost Website Version Tests', () => {
   

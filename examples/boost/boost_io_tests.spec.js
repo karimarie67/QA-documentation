@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
-import { selectors } from '../selectors.js';
-import { logAndScreenshot, safeGoto } from '../utils.js';
-import { buildURL, testData, urlPatterns, expectedUrlPatterns } from '../config-helper.js';
+import { selectors } from '../../selectors.js';
+import { logAndScreenshot, safeGoto } from '../../utils.js';
+import { buildURL, testData, urlPatterns, expectedUrlPatterns } from '../../config-helper.js';
 import { 
   findVisibleElement, 
   testElementVisibility, 
@@ -12,7 +12,7 @@ import {
   testNavigationLink,
   validateElementDetails,
   testPatterns 
-} from '../test-helpers.js';
+} from '../../test-helpers.js';
 
 async function setupPage(page, testInfo, viewport = testData.viewport.desktop) {
   await page.setViewportSize(viewport);
