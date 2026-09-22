@@ -1,11 +1,11 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Join Boost Slack Discussion
-    url: https://cpplang.slack.com/archives/C0610TPQMAR
-    about: Ask questions and discuss with the community
-  - name: Boost Documentation
-    url: https://www.boost.org/doc/
-    about: Check the official Boost documentation
-  - name: Boost Mailing Lists
-    url: https://www.boost.org/community/groups.html
-    about: Join the Boost mailing lists for discussions and announcements
+  - name: Team Discussion
+    url: https://example.com/TODO-replace-with-your-teams-chat
+    about: "TODO: replace with your Engagement's chat/discussion channel"
+  - name: Documentation
+    url: https://example.com/TODO-replace-with-your-docs
+    about: "TODO: replace with a link to your project's documentation"
+  - name: Team Mailing List / Discussions
+    url: https://example.com/TODO-replace-with-your-mailing-list
+    about: "TODO: replace with your team's mailing list or discussion forum"

@@ -32,19 +32,6 @@ jobs:
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-    - name: Validate Boost.org workflow
-      run: |
-        echo "🚀 Merging develop to master for Boost.org repository"
-        echo "Repository: ${{ github.repository }}"
-        echo "Note: Workflow file should exist on develop branch for this to work"
-        
-        # Check if this is a boost.org repository
-        if [[ "${{ github.repository }}" == boostorg/* ]]; then
-          echo "✅ Confirmed: This is a Boost.org repository"
-        else
-          echo "⚠️  Warning: This may not be a Boost.org repository"
-        fi
-
     - name: Validate branches exist
       run: |
         echo "Checking if develop branch exists..."
