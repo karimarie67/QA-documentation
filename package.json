@@ -1,21 +1,21 @@
 {
   "name": "qa-documentation",
   "version": "1.0.0",
-  "description": "QA automation framework for Boost.org testing",
+  "description": "Generic Playwright QA automation framework template",
   "scripts": {
     "test": "playwright test tests/",
     "test:smoke": "playwright test tests/smoke_tests.spec.js",
-    "test:regression": "playwright test tests/boost_io_tests.spec.js tests/boost_version_tests.spec.js",
+    "test:regression": "playwright test tests/documentation_tests.spec.js tests/download_search_tests.spec.js tests/error_handling_tests.spec.js",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "dashboard": "node dashboards/scripts/generate-dashboard.js",
     "report": "playwright show-report",
     "test:unit": "node --test tests/unit/*.test.js",
-    "test:template-check": "node scripts/template-check.js"
+    "test:template-check": "node scripts/template-check.js",
+    "test:links": "playwright test tests/check-links.spec.js --project=link-checker"
   },
-  "keywords": ["qa", "testing", "playwright", "automation", "boost"],
+  "keywords": ["qa", "testing", "playwright", "automation"],
   "author": "karimarie67",
-  "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.40.0"
   }
