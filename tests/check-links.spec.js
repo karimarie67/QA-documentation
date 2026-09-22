@@ -4,29 +4,20 @@ const fs = require('fs');
 const path = require('path');
 
 // Production domains
+// TODO(Engagement): replace with your site's real production domain(s)
 const PRODUCTION_DOMAINS = [
-  'https://www.boost.org',
-  'https://boost.org'
+  'https://www.example.com'
 ];
 
 // Versions to spot-check
-const VERSIONS_TO_CHECK = [
-  '1_86_0',
-  '1_87_0',
-  '1_88_0',
-  '1_89_0',
-  '1_90_0',
-  'latest'
-];
+// TODO(Engagement): if your site has versioned documentation, list version identifiers here to spot-check each one; leave empty to skip this feature
+const VERSIONS_TO_CHECK = [];
 
-// Popular libraries to spot-check
+// Content identifiers to spot-check
+// TODO(Engagement): replace with real content identifiers from your site, or leave as placeholders if unused (only relevant when VERSIONS_TO_CHECK is non-empty)
 const LIBRARIES_TO_SPOT_CHECK = [
-  'asio',
-  'beast',
-  'filesystem',
-  'test',
-  'thread',
-  'regex'
+  'example-item-one',
+  'example-item-two'
 ];
 
 // State tracking
@@ -40,7 +31,7 @@ let docPagesChecked = 0;
 function normalizeUrl(url) {
   for (const domain of PRODUCTION_DOMAINS) {
     if (url.startsWith(domain)) {
-      return url.replace(domain, 'https://www.boost.org');
+      return url.replace(domain, PRODUCTION_DOMAINS[0]);
     }
   }
   return url;
@@ -50,6 +41,7 @@ function isProductionUrl(url) {
   return PRODUCTION_DOMAINS.some(domain => url.startsWith(domain));
 }
 
+// TODO(Engagement): replace '/doc/libs/' with your site's actual versioned-documentation path prefix, or adjust this check entirely if your site has no separate doc-path structure
 function isDocUrl(url) {
   return url.includes('/doc/libs/');
 }
@@ -235,12 +227,12 @@ function printSummary() {
   console.log(`⊘ Skipped (OAuth, external, etc.): ${skipped}`);
   console.log(`⚠ Malformed paths (/libs/ instead of /doc/libs/): ${malformedPaths.length}`);
   console.log(`✗ Total broken links: ${broken.length}`);
-  console.log(`  - Site pages (Django): ${siteBroken.length}`);
+  console.log(`  - Site pages: ${siteBroken.length}`);
   console.log(`  - Doc pages (libraries): ${docBroken.length}`);
   console.log(`↪ Redirects: ${redirects.length}`);
 
   if (malformedPaths.length > 0) {
-    console.log('\n⚠ MALFORMED PATHS (Fix in Django templates):');
+    console.log('\n⚠ MALFORMED PATHS (needs a source-code fix):');
     malformedPaths.slice(0, 10).forEach((link, i) => {
       console.log(`  ${i + 1}. ${link.url}`);
       console.log(`      Found on: ${link.source}`);
@@ -279,7 +271,7 @@ function printSummary() {
   }
 }
 
-test.describe('Boost.org Production Link Check', () => {
+test.describe('Production Link Check', () => {
   test.setTimeout(1800000); // 30 minutes for the whole test
 
   test.beforeEach(() => {
@@ -294,27 +286,27 @@ test.describe('Boost.org Production Link Check', () => {
 
   test('should check all main site pages and spot-check documentation', async ({ page }) => {
     console.log('='.repeat(80));
-    console.log('🚀 PRODUCTION LINK CHECKER - boost.org');
+    console.log('🚀 PRODUCTION LINK CHECKER');
     console.log('='.repeat(80));
     console.log('⚠️  WARNING: Running against PRODUCTION site');
     console.log('⚠️  Using respectful delays (0.3s between requests)');
     console.log(`Started at ${new Date().toLocaleString()}`);
-    console.log(`Strategy: Deep check Django pages, spot-check library docs`);
+    console.log(`Strategy: Deep check main site pages, spot-check documentation`);
     console.log(`Versions to check: ${VERSIONS_TO_CHECK.join(', ')}\n`);
 
     // Set user agent
     await page.setExtraHTTPHeaders({
-      'User-Agent': 'Mozilla/5.0 (compatible; BoostLinkChecker/1.0; +https://boost.org)'
+      'User-Agent': `Mozilla/5.0 (compatible; SiteLinkChecker/1.0; +${PRODUCTION_DOMAINS[0]})`
     });
 
     // Main site pages
     const startUrls = [
-      'https://www.boost.org/',
-      'https://www.boost.org/libraries/',
-      'https://www.boost.org/docs/',
-      'https://www.boost.org/releases/',
-      'https://www.boost.org/news/',
-      'https://www.boost.org/community/',
+      `${PRODUCTION_DOMAINS[0]}/`,
+      `${PRODUCTION_DOMAINS[0]}/libraries/`,
+      `${PRODUCTION_DOMAINS[0]}/docs/`,
+      `${PRODUCTION_DOMAINS[0]}/releases/`,
+      `${PRODUCTION_DOMAINS[0]}/news/`,
+      `${PRODUCTION_DOMAINS[0]}/community/`,
     ];
 
     console.log('Checking main site pages...');
@@ -325,13 +317,13 @@ test.describe('Boost.org Production Link Check', () => {
     // Spot-check library docs
     console.log('\nSpot-checking library documentation...');
     for (const version of VERSIONS_TO_CHECK) {
-      const versionUrl = `https://www.boost.org/doc/libs/${version}/`;
+      const versionUrl = `${PRODUCTION_DOMAINS[0]}/doc/libs/${version}/`;
       console.log(`\n  Checking version ${version}...`);
 
       await checkPage(page, versionUrl);
 
       for (const lib of LIBRARIES_TO_SPOT_CHECK) {
-        const libUrl = `https://www.boost.org/doc/libs/${version}/libs/${lib}/`;
+        const libUrl = `${PRODUCTION_DOMAINS[0]}/doc/libs/${version}/libs/${lib}/`;
         await checkPage(page, libUrl, versionUrl, 0);
       }
     }
