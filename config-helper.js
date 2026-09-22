@@ -7,7 +7,8 @@ import { test } from '@playwright/test';
  */
 export function getBaseURL(testInfo) {
   const config = testInfo.project.use;
-  return config.baseURL || 'https://www.boost.org';
+  // TODO(Engagement): replace this placeholder with the Engagement's actual base URL.
+  return config.baseURL || 'https://www.example.com';
 }
 
 /**
@@ -47,8 +48,10 @@ export const urlPatterns = {
   community: '/community/',
   search: '/search/',
   // Version-specific URLs
-  docLibsVersion: (version = '1_85_0') => `/doc/libs/${version}/`,
-  releaseNotes: (version = '1_85_0') => `/doc/libs/${version}/libs/release_notes/`,
+  // TODO(Engagement): this path scheme and default version are placeholders -
+  // update them to match the Engagement's actual versioned-docs URL structure.
+  docLibsVersion: (version = '1_0_0') => `/docs/${version}/`,
+  releaseNotes: (version = '1_0_0') => `/docs/${version}/release_notes/`,
 };
 
 /**
@@ -58,9 +61,12 @@ export const expectedUrlPatterns = {
   afterCTAClick: /libraries|releases|docs|learn|download/i,
   afterSearch: /search|results|q=/i,
   afterLogoClick: /\/?$/,
-  githubBoost: /github\.com\/boostorg/,
-  downloadSite: /archives\.boost\.io|github\.com\/boostorg\/boost\/releases|download|release/i,
-  communityLinks: /github.com.*issues|discourse|lists.boost.org/i,
+  // TODO(Engagement): replace with the Engagement's actual GitHub org/repo pattern.
+  githubBoost: /github\.com\/<your-org>/,
+  // TODO(Engagement): replace with the Engagement's actual download host/site pattern.
+  downloadSite: /downloads?\.example\.com|download|release/i,
+  // TODO(Engagement): replace with the Engagement's actual community-link pattern.
+  communityLinks: /github.com.*issues|discourse|community\.example\.com/i,
 };
 
 /**
@@ -68,12 +74,14 @@ export const expectedUrlPatterns = {
  */
 export const testData = {
   searchTerms: {
-    working: 'asio', // Known to work
-    alternative: 'algorithm',
+    // TODO(Engagement): replace with search terms known to return results on the target site.
+    working: 'example-search-term', // Known to work
+    alternative: 'example-alternative-term',
   },
   downloadFiles: {
-    tarGz: /boost_1_74_0\.tar\.gz$/,
-    zip: /boost_1_85_0\.zip$/,
+    // TODO(Engagement): replace with the Engagement's actual downloadable filename patterns.
+    tarGz: /example[-_]?\S*\.tar\.gz$/,
+    zip: /example[-_]?\S*\.zip$/,
     supported: /\.(zip|tar\.gz|tar\.bz2|7z|exe)$/,
   },
   timeouts: {
