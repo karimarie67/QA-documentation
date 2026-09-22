@@ -15,7 +15,7 @@ const VERSIONS_TO_CHECK = [];
 
 // Content identifiers to spot-check
 // TODO(Engagement): replace with real content identifiers from your site, or leave as placeholders if unused (only relevant when VERSIONS_TO_CHECK is non-empty)
-const LIBRARIES_TO_SPOT_CHECK = [
+const CONTENT_IDENTIFIERS_TO_SPOT_CHECK = [
   'example-item-one',
   'example-item-two'
 ];
@@ -322,7 +322,7 @@ test.describe('Production Link Check', () => {
 
       await checkPage(page, versionUrl);
 
-      for (const lib of LIBRARIES_TO_SPOT_CHECK) {
+      for (const lib of CONTENT_IDENTIFIERS_TO_SPOT_CHECK) {
         const libUrl = `${PRODUCTION_DOMAINS[0]}/doc/libs/${version}/libs/${lib}/`;
         await checkPage(page, libUrl, versionUrl, 0);
       }

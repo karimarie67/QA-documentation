@@ -43,7 +43,7 @@ test.describe('Error Handling Tests', () => {
     }
 
     if (!errorFound) {
-      await logAndScreenshot(page, testInfo, '404 error message not found', 'test-results/screenshots/tc_error_001_no_404.png');
+      await logAndScreenshot(page, testInfo, '404 error message not found', 'test-results/screenshots/tc_error_001/no_404.png');
       // Check the page title or URL as fallback
       const title = await page.title();
       const url = page.url();
@@ -65,7 +65,7 @@ test.describe('Error Handling Tests', () => {
     testInfo.setTimeout(30000);
 
     // Try to access a broken documentation link
-    const brokenDocUrl = buildURL(testInfo, '/doc/libs/nonexistent-library', { cachebust: true });
+    const brokenDocUrl = buildURL(testInfo, `${urlPatterns.documentation}nonexistent-library`, { cachebust: true });
     
     const response = await page.goto(brokenDocUrl, { 
       waitUntil: 'networkidle',

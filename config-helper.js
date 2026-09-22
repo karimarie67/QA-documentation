@@ -43,8 +43,9 @@ export function buildURL(testInfo, path = '/', options = {}) {
 export const urlPatterns = {
   homepage: '/',
   libraries: '/libraries/',
-  releases: '/releases/', 
-  documentation: '/doc/libs/',
+  releases: '/releases/',
+  // TODO(Engagement): placeholder - align with docLibsVersion's path scheme below.
+  documentation: '/docs/',
   community: '/community/',
   search: '/search/',
   // Version-specific URLs

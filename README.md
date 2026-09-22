@@ -38,18 +38,22 @@ npm run test:template-check  # structural smoke check that the template itself i
 
 ## Configuring a new site
 
-A new Engagement edits two files at the repo root:
+A new Engagement edits Site config across a few files, all marked with
+`TODO(Engagement)` comments:
 
-- [`config-helper.js`](./config-helper.js)
-- [`selectors.js`](./selectors.js)
-
-Placeholder values in both are marked with `TODO(Engagement)` comments —
-replace them with the target site's actual URLs, patterns, and selectors.
+- [`config-helper.js`](./config-helper.js) and
+  [`playwright.config.js`](./playwright.config.js) — base URLs, download-file
+  patterns, and other placeholder values.
+- [`selectors.js`](./selectors.js) — the fallback CSS selectors and element
+  IDs each `selectors.X` function tries; not every entry is `TODO`-marked, so
+  read through the fallback arrays too, not just the comments.
+- The skeleton specs under `tests/` and `tests/check-links.spec.js` — each has
+  `TODO(Engagement)` markers at the assertions that need real content.
 
 ## CI
 
-- `unit-tests` and `template-check` run automatically on every push and PR —
-  no configuration needed.
+- `unit-tests` and `template-check` run automatically on every push and PR to
+  `main`/`develop` — no configuration needed.
 - The real browser e2e jobs (`smoke-tests`, `error-handling-tests`,
   `download-search-tests`, `documentation-tests`) only run via manual
   `workflow_dispatch`, until the placeholders in `playwright.config.js`,

@@ -12,14 +12,11 @@ export async function logAndScreenshot(page, testInfo, message, path, logFile = 
     try {
       fs.mkdirSync(nodePath.dirname(path), { recursive: true });
       await page.screenshot({ path, fullPage: true, timeout: 3000 });
-      fs.mkdirSync(nodePath.dirname(logFile), { recursive: true });
       fs.appendFileSync(logFile, `Screenshot saved: ${path}\n`);
     } catch (err) {
-      fs.mkdirSync(nodePath.dirname(logFile), { recursive: true });
       fs.appendFileSync(logFile, `Screenshot failed: ${err.message}\n`);
     }
   } else {
-    fs.mkdirSync(nodePath.dirname(logFile), { recursive: true });
     fs.appendFileSync(logFile, `Screenshot skipped: Page is closed\n`);
   }
 }

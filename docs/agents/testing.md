@@ -17,11 +17,11 @@ rereading this guide.
 | Check | Command | Coverage | When | Status |
 |---|---|---|---|---|
 | test | `npm run test` | Full Playwright suite under tests/ | Before PR and after implementation | inferred |
-| unit | `npm run test:unit` | Unit tests for the Site config layer | On every push/PR as part of the automatic gate | inferred |
-| template-check | `npm run test:template-check` | Structural smoke check that the template's config/spec files are intact | On every push/PR as part of the automatic gate | inferred |
+| unit | `npm run test:unit` | Unit tests for the Site config layer | On every push/PR to main/develop, as part of the automatic gate | inferred |
+| template-check | `npm run test:template-check` | Structural smoke check that the template's config/spec files are intact | On every push/PR to main/develop, as part of the automatic gate | inferred |
 | smoke | `npm run test:smoke` | Critical-path validation (tests/smoke_tests.spec.js) | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
 | regression | `npm run test:regression` | documentation, download/search, and error-handling suites | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
-| links | `npm run test:links` | Link-checker suite | Manual dispatch | inferred |
+| links | `npm run test:links` | Link-checker suite | Local only (no CI job) | inferred |
 
 `verified` means the command ran successfully here. `inferred` means configuration names it but setup did not execute it. `unavailable` is an explicit gap.
 

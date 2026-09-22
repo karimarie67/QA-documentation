@@ -41,8 +41,11 @@ Atlas runs these commands to prove that a change works.
 | Check | Command | What it covers | When it runs | Status |
 |---|---|---|---|---|
 | test | `npm run test` | Full Playwright suite under tests/ | Before PR and after implementation | inferred |
+| unit | `npm run test:unit` | Unit tests for the Site config layer | On every push/PR to main/develop, as part of the automatic gate | inferred |
+| template-check | `npm run test:template-check` | Structural smoke check that the template's config/spec files are intact | On every push/PR to main/develop, as part of the automatic gate | inferred |
 | smoke | `npm run test:smoke` | Critical-path validation (tests/smoke_tests.spec.js) | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
 | regression | `npm run test:regression` | documentation, download/search, and error-handling suites | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
+| links | `npm run test:links` | Link-checker suite | Local only (no CI job) | inferred |
 
 `verified` means setup ran the command here and it worked. `inferred` means the
 repository names the command, but setup did not run it. `unavailable` means the

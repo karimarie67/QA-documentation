@@ -41,6 +41,9 @@ function toLocator(page, def) {
  * of fallback definitions (see toLocator above).
  */
 function buildChain(page, defs) {
+  if (!defs || defs.length === 0) {
+    throw new Error('buildChain: fallback array is empty - add at least one selector definition.');
+  }
   return defs.map(def => toLocator(page, def)).reduce((acc, loc) => acc.or(loc));
 }
 
@@ -66,6 +69,8 @@ export const searchInputFallbacks = [
 ];
 
 export const searchTriggerFallbacks = [
+  // TODO(Engagement): '#gecko-search-button' is a site-specific element ID -
+  // replace with your site's actual search-trigger ID/selector.
   '#gecko-search-button',
   'button[aria-label*="search" i], button[title*="search" i]',
   '.search-trigger, #search-trigger, [class*="search-btn"]',

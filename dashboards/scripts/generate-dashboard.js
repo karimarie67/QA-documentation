@@ -23,7 +23,19 @@ function main() {
   
   const testResults = collectTestResults();
   const metrics = calculateMetrics(testResults);
-  
+
+  if (metrics.totalTests === 0) {
+    // No real artifacts were found (see collectTestResults). Render an explicit
+    // "no data" dashboard instead of a full report - recording this as a real
+    // history entry would read as "a run happened and everything failed"
+    // rather than "no run happened", permanently skewing the trend series and
+    // flaky-test detection with a data point that never represented a run.
+    console.warn('⚠️ No real test results to report - skipping history update, writing a no-data dashboard.');
+    fs.writeFileSync(DASHBOARD_PATH, generateNoDataMarkdown());
+    console.log('✅ Dashboard generated successfully (no data).');
+    return;
+  }
+
   updateHistory(metrics);
   const history = loadHistory();
   
@@ -227,6 +239,13 @@ function calculateTrends(metrics, history) {
 }
 
 // --- MARKDOWN GENERATION ---
+
+function generateNoDataMarkdown() {
+  return `# 📊 QA Metrics Dashboard
+
+No QA run data yet — this dashboard is regenerated automatically by CI. Run the workflow to populate it.
+`;
+}
 
 function generateDashboardMarkdown(metrics, results, history, trends) {
   const env = (metrics.environment || 'staging').toUpperCase();

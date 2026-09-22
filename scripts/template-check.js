@@ -10,14 +10,17 @@
  *    its testDir (via `playwright test --list --reporter=json`), and that
  *    the five expected top-level specs are all present.
  *
- * This is not a syntax linter (see the note in the repo's D8 execution
- * packet about why `node --check` was rejected for this purpose) - it is a
- * smoke check that the framework, as configured, still hangs together.
+ * This is not a syntax linter. `node --check` was considered and rejected:
+ * on a `.js` file containing an `import` statement, Node's module-syntax
+ * auto-detection fires before `--check`'s validation and makes it exit 0
+ * regardless of body syntax errors - it would never catch a broken spec.
+ * `playwright test --list` genuinely parses and enumerates every spec, so
+ * it's the real proof the template, as configured, still hangs together.
  */
 
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,7 +42,7 @@ async function checkModuleImports() {
 
   for (const [label, modulePath] of modules) {
     try {
-      await import(`${'file://'}${modulePath}`);
+      await import(pathToFileURL(modulePath).href);
     } catch (err) {
       console.error(`FAIL: could not import ${label} (${modulePath})`);
       console.error(err && err.stack ? err.stack : err);
@@ -149,4 +152,8 @@ async function main() {
   process.exit(0);
 }
 
-main();
+main().catch(err => {
+  console.error('FAIL: template-check crashed unexpectedly.');
+  console.error(err && err.stack ? err.stack : err);
+  process.exit(1);
+});

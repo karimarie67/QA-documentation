@@ -86,39 +86,49 @@ test('every *Fallbacks array export', async t => {
 });
 
 test('logoFallbacks', async t => {
-  await t.test('has exactly 3 entries (down from 6 after removing Boost-specific ones)', () => {
-    assert.equal(logoFallbacks.length, 3);
-  });
-
-  await t.test('none of its 3 entries reference Boost_Symbol_Transparent or any boost string', () => {
-    for (const entry of logoFallbacks) {
-      const str = entryToString(entry);
-      assert.doesNotMatch(str, /Boost_Symbol_Transparent/i);
-      assert.doesNotMatch(str, /boost/i);
-    }
+  await t.test('contains exactly the expected generic fallback chain, in order', () => {
+    assert.deepEqual(logoFallbacks, [
+      { selector: '.logo img, #logo img, [class*="logo"] img', hasNotIframe: true },
+      { selector: 'header img, nav img', first: true },
+      { selector: 'a[href="/"] img, a[href="./"] img', first: true },
+    ]);
   });
 });
 
 test('downloadLinksFallbacks', async t => {
-  await t.test('has exactly 4 entries (down from 6)', () => {
-    assert.equal(downloadLinksFallbacks.length, 4);
-  });
-
-  await t.test('none of its entries reference archives.boost.io or boost_1_85_0/boost-1.85.0', () => {
-    for (const entry of downloadLinksFallbacks) {
-      const str = entryToString(entry);
-      assert.doesNotMatch(str, /archives\.boost\.io/i);
-      assert.doesNotMatch(str, /boost[_-]1[._]85[._]0/i);
-    }
+  await t.test('contains exactly the expected generic fallback chain, in order', () => {
+    assert.deepEqual(downloadLinksFallbacks, [
+      'a[href$=".tar.gz"], a[href$=".zip"], a[href$=".exe"]',
+      'a:has-text("Download"), a:has-text("tar.gz"), a:has-text("zip")',
+      '[class*="download"], #download',
+      'button:has-text("Download")',
+    ]);
   });
 });
 
 test('selectors function API', async t => {
-  await t.test('selectors.logo is still a function', () => {
-    assert.equal(typeof selectors.logo, 'function');
+  // Every selectors.X entry the additive refactor is supposed to leave
+  // untouched, including the nested selectors.forms.* group - a dropped or
+  // renamed entry here would otherwise pass test:unit and test:template-check
+  // silently, since neither exercises call sites directly.
+  const topLevelNames = [
+    'mobileToggle', 'mobileMenu', 'searchInput', 'searchTrigger', 'logo',
+    'nav', 'navLinks', 'content', 'cta', 'externalLinks', 'footer',
+    'searchResults', 'downloadLinks', 'modals', 'alerts', 'loading',
+  ];
+  for (const name of topLevelNames) {
+    await t.test(`selectors.${name} is a function`, () => {
+      assert.equal(typeof selectors[name], 'function');
+    });
+  }
+
+  await t.test('selectors.forms is an object', () => {
+    assert.equal(typeof selectors.forms, 'object');
   });
 
-  await t.test('selectors.downloadLinks is still a function', () => {
-    assert.equal(typeof selectors.downloadLinks, 'function');
-  });
+  for (const name of ['input', 'button', 'select', 'textarea']) {
+    await t.test(`selectors.forms.${name} is a function`, () => {
+      assert.equal(typeof selectors.forms[name], 'function');
+    });
+  }
 });
