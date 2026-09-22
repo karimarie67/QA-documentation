@@ -17,8 +17,11 @@ rereading this guide.
 | Check | Command | Coverage | When | Status |
 |---|---|---|---|---|
 | test | `npm run test` | Full Playwright suite under tests/ | Before PR and after implementation | inferred |
-| smoke | `npm run test:smoke` | Critical-path validation (tests/smoke_tests.spec.js) | On every PR/commit, as a pre-merge gate | inferred |
-| regression | `npm run test:regression` | Boost.io and version regression suites | On merge to develop / before release verification | inferred |
+| unit | `npm run test:unit` | Unit tests for the Site config layer | On every push/PR as part of the automatic gate | inferred |
+| template-check | `npm run test:template-check` | Structural smoke check that the template's config/spec files are intact | On every push/PR as part of the automatic gate | inferred |
+| smoke | `npm run test:smoke` | Critical-path validation (tests/smoke_tests.spec.js) | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
+| regression | `npm run test:regression` | documentation, download/search, and error-handling suites | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
+| links | `npm run test:links` | Link-checker suite | Manual dispatch | inferred |
 
 `verified` means the command ran successfully here. `inferred` means configuration names it but setup did not execute it. `unavailable` is an explicit gap.
 
@@ -31,8 +34,8 @@ rereading this guide.
   proof-artifact root. Rerunning a test replaces that test directory.
 - Visual/browser behavior: screenshot by default for UI/browser assertions; video only when motion, timing, or a multi-step interaction cannot be proved by a still image.
 - Integration and non-UI behavior: committed Playwright HTML report and test-results.json for each run.
-- External integration: real staging/production smoke or regression run against boost.org / stage.boost.org.
-- Sensitive data: no real customer PII expected on Boost.org's public test surfaces; scrub any auth tokens, cookies, or session data captured in traces before commit.
+- External integration: real staging/production smoke or regression run against the Engagement's configured target (playwright.config.js's staging/production baseURL, once replaced from its placeholder).
+- Sensitive data: scrub any auth tokens, cookies, session data, or PII captured in traces before commit; do not assume the target site has none.
 - Any screenshot, video, test report, captured output, or other artifact cited as
   `PASS` evidence is saved beneath `test-results` and committed
   on the feature branch. The PR links to the committed path; it never describes

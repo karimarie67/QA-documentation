@@ -28,7 +28,7 @@ repository keeps its own base SHA, branch, verification result, and pull request
 
 ## Repository framing
 
-**QA-documentation** — QA automation framework for Boost.org: Playwright test suites, a CI-driven QA metrics dashboard, and process documentation for the Boost.org testing program.
+**QA-documentation** — a generic, site-agnostic Playwright QA automation Framework template: test suites, a CI-driven QA metrics dashboard, and process documentation, instantiated per client Engagement.
 
 ### Structure
 
@@ -37,6 +37,7 @@ repository keeps its own base SHA, branch, verification result, and pull request
 - `dashboards/` — QA metrics dashboard generator and published dashboard, auto-committed by CI after each run
 - `scripts/` — Support scripts
 - `test-results/` — Evidence root: Playwright HTML/JSON reports and captured output
+- `examples/` — trimmed, non-live reference implementations of the Framework from closed Engagements, kept for reference; not discoverable by the tracked `playwright.config.js`
 
 ### Repository-specific rules
 
