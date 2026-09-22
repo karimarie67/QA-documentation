@@ -1,207 +1,63 @@
-# 🚀 QA Automation Framework - Boost.org Testing
+# QA Automation Framework
 
-> Complete QA automation suite with CI/CD integration and live metrics dashboards for Boost C++ Libraries
+A generic, site-agnostic Playwright QA automation **Framework** — a template
+you instantiate per Engagement, not a finished product built for one site.
 
-[![Tests](https://github.com/karimarie67/QA-documentation/actions/workflows/qa-test.yml/badge.svg)](https://github.com/karimarie67/QA-documentation/actions/workflows/qa-test.yml)
-[![Dashboard](https://img.shields.io/badge/📊_Dashboard-Live-brightgreen)](./dashboards/qa-metrics.md)
+## Instantiating this for a new Engagement
 
-## 🎯 Live Demo
+Pick one:
 
-### 📊 [**View QA Dashboard**](./dashboards/qa-metrics.md) ← Click to see live metrics!
+- **Clone the repo.** This always works, regardless of any GitHub setting.
+- **Click "Use this template" on GitHub.** This only appears once a repo
+  admin has enabled it: **Settings → General → Template repository**. That
+  is a one-time, admin-only action — nothing in this codebase can enable it
+  for you. Until it's enabled, clone instead.
 
-The dashboard updates automatically after each test run, showing:
-- Real-time test execution results
-- Pass/fail rates and trends
-- Historical data and metrics
-- SOW progress tracking
+## Worked example
 
-### 🤖 [**Watch Tests Run**](../../actions) ← See automation in action!
+[`examples/boost/README.md`](./examples/boost/README.md) is a complete, real
+(though non-live/historical) instance of this Framework wired up for a past
+Engagement (Boost.org). It's a useful reference for seeing the shape of a
+working configuration, including the [QA Handbook](./examples/boost/QA_handbook.md),
+[functional test cases](./examples/boost/Functional-Table%201.csv), and
+[regression test cases](./examples/boost/Regression-Table%201.csv) from that
+Engagement.
 
----
-
-## ✨ Key Features
-
-### 🧪 Automated Test Suite
-- **Smoke Tests** - Run on every PR/commit (5-10 min)
-  - Critical path validation
-  - Pre-merge quality gate
-  - Fast developer feedback
-- **Regression Tests** - Run on develop branch after merge (30-60 min)
-  - `boost_io_tests.spec.js` - Comprehensive Boost.io testing
-  - `boost_version_tests.spec.js` - Version-specific validation
-- **Playwright-based** - Modern, reliable automation
-
-### 🔄 CI/CD Integration  
-- **Shift-left approach** - Test early and often
-- **Smart test execution:**
-  - Smoke tests on every PR (pre-merge gate)
-  - Regression tests on develop (post-merge validation)
-- Scheduled runs every 6 hours
-- Manual triggers with environment selection
-- Parallel execution for speed
-
-### 📊 Live Dashboards
-- Auto-updating metrics
-- Visual test results
-- 7-day trends and history
-- SOW progress tracking
-- Quality indicators
-
-### 📚 Complete Documentation
-- [QA Handbook](./docs/QA_handbook.md)
-- [Testing Strategy](./docs/testing_strategy_doc.md) ← **Read this!**
-- [Test Coverage Maps](./docs/Test-Coverage-Map.md)
-- [Functional Test Cases](./docs/2.%20Functional-Table%201.csv)
-- [Regression Test Cases](./docs/Regression-Table%201.csv)
-
----
-
-## 🚀 Quick Start
-
-### Run Tests Locally
+## Quick start
 
 ```bash
-# Install dependencies
 npm install
 
-# Run all tests
-npm test
-
-# Run specific suite
-npm run test:smoke
-npm run test:boost-io
-npm run test:version
-
-# Run with UI
-npm run test:headed
+npm test                     # run the full test suite
+npm run test:smoke           # smoke tests only
+npm run test:regression      # regression suite (documentation, download/search, error handling)
+npm run test:links           # link checker
+npm run test:unit            # unit tests for config-helper.js/selectors.js
+npm run test:template-check  # structural smoke check that the template itself is intact
 ```
 
-### Trigger Tests in GitHub
+## Configuring a new site
 
-1. Go to [Actions](../../actions) tab
-2. Select "QA Test Suite - Boost.org"
-3. Click "Run workflow"
-4. Choose environment (staging/production)
-5. Watch the tests execute!
+A new Engagement edits Site config across a few files, all marked with
+`TODO(Engagement)` comments:
 
----
+- [`config-helper.js`](./config-helper.js) and
+  [`playwright.config.js`](./playwright.config.js) — base URLs, download-file
+  patterns, and other placeholder values.
+- [`selectors.js`](./selectors.js) — the fallback CSS selectors and element
+  IDs each `selectors.X` function tries; not every entry is `TODO`-marked, so
+  read through the fallback arrays too, not just the comments.
+- The skeleton specs under `tests/` and `tests/check-links.spec.js` — each has
+  `TODO(Engagement)` markers at the assertions that need real content.
 
-## 📊 Current Status
+## CI
 
-**SOW Completion:**
-- ✅ **Month 1:** Foundation & Planning (100%)
-- ✅ **Month 2:** Setup & Early Execution (100%)
-- ✅ **Month 3:** Automation & Optimization (100%)
-
-**Test Automation:**
-- Smoke Tests: ✅ Fully automated
-- Boost.io Tests: ✅ Fully automated  
-- Version Tests: ✅ Fully automated
-- CI/CD Pipeline: ✅ Running
-- Live Dashboard: ✅ Implemented
-
----
-
-## 🗂️ Repository Structure
-
-```
-QA-documentation/
-├── .github/
-│   ├── workflows/
-│   │   └── qa-tests.yml          # CI/CD pipeline
-│   └── ISSUE_TEMPLATE/           # Bug report templates
-├── dashboards/
-│   ├── qa-metrics.md             # 📊 LIVE DASHBOARD
-│   ├── scripts/
-│   │   └── generate-dashboard.js # Dashboard generator
-│   └── test-results/             # Historical data
-├── docs/
-│   ├── QA_handbook.md           # Complete QA processes
-│   ├── 2. Functional-Table 1.csv # Functional test cases
-│   └── Regression-Table 1.csv    # Regression test cases
-├── smoke_tests.spec.js           # Smoke test suite
-├── boost_io_tests.spec.js        # Boost.io tests
-├── boost_version_tests.spec.js   # Version tests
-├── playwright.config.js          # Test configuration
-└── package.json                  # Dependencies & scripts
-```
-
----
-
-## 🎬 Demo Walkthrough
-
-### 1. Live Dashboard (Main Feature!)
-- Navigate to [dashboards/qa-metrics.md](./dashboards/qa-metrics.md)
-- See real-time test results
-- View pass rates and trends
-- Check SOW progress
-
-### 2. Watch Tests Execute
-- Go to [Actions](../../actions)
-- Click latest workflow run
-- See tests running in real-time
-- Watch dashboard auto-update
-
-### 3. Manual Test Trigger
-- Actions → QA Test Suite → Run workflow
-- Select staging or production
-- Tests execute automatically
-- Results available in minutes
-
-### 4. Review Documentation
-- [QA Handbook](./docs/QA_handbook.md) - Complete processes
-- [Test Cases](./docs/) - What we test
-- Dashboard metrics - Live results
-
----
-
-## 🔧 Tech Stack
-
-- **Testing Framework:** Playwright (JavaScript)
-- **CI/CD:** GitHub Actions
-- **Dashboard:** Auto-generated Markdown
-- **Reporting:** JSON + HTML reports
-- **Environments:** Boost.org (staging + production)
-
----
-
-## 📈 Achievements
-
-| Metric | Target | Current |
-|--------|--------|---------|
-| Test Automation | 100% | 100% |
-| CI/CD Integration | Yes | ✅ |
-| Live Dashboard | Yes | ✅ |
-| Pass Rate | >95% | Tracking |
-| SOW Completion | 100% | 100% |
----
-
-## 🔮 Next Steps
-
-**Q4 2025:**
-- ✅ Expand regression coverage as needed
-- ✅ Add visual regression testing
-- [ ] Implement performance benchmarks
-- [ ] Video recordings of failures
-- [ ] Hire new QA Analyst
-
----
-
-## 📞 About
-
-This QA framework demonstrates:
-- ✅ Modern automated testing practices
-- ✅ CI/CD integration with GitHub Actions
-- ✅ Live metrics and dashboards
-- ✅ Complete documentation
-- ✅ Real-world testing of production systems
-
----
-
-<p align="center">
-  <strong>Built for demonstrating professional QA automation</strong><br>
-  <sub>Automated testing • Real-time metrics • Continuous improvement</sub>
-</p>
+- `unit-tests` and `template-check` run automatically on every push and PR to
+  `main`/`develop` — no configuration needed.
+- The real browser e2e jobs (`smoke-tests`, `error-handling-tests`,
+  `download-search-tests`, `documentation-tests`) only run via manual
+  `workflow_dispatch`, until the placeholders in `playwright.config.js`,
+  `config-helper.js`, and `selectors.js` are replaced with real Site config.
 
 <!-- atlas-v3:readme:start -->
 ## Atlas

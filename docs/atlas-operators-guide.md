@@ -20,7 +20,7 @@ what Atlas will write on a ticket later, while it does the work.
 | Item | Value |
 |---|---|
 | Workspace name | QA-documentation |
-| What this repository is for | QA automation framework for Boost.org: Playwright test suites, a CI-driven QA metrics dashboard, and process documentation for the Boost.org testing program. |
+| What this repository is for | A generic, site-agnostic Playwright QA automation Framework template: test suites, a CI-driven QA metrics dashboard, and process documentation, instantiated per client Engagement. |
 | Folder for proof of work | `test-results` |
 
 Atlas may change the repositories below, and nothing else.
@@ -41,8 +41,11 @@ Atlas runs these commands to prove that a change works.
 | Check | Command | What it covers | When it runs | Status |
 |---|---|---|---|---|
 | test | `npm run test` | Full Playwright suite under tests/ | Before PR and after implementation | inferred |
-| smoke | `npm run test:smoke` | Critical-path validation (tests/smoke_tests.spec.js) | On every PR/commit, as a pre-merge gate | inferred |
-| regression | `npm run test:regression` | Boost.io and version regression suites | On merge to develop / before release verification | inferred |
+| unit | `npm run test:unit` | Unit tests for the Site config layer | On every push/PR to main/develop, as part of the automatic gate | inferred |
+| template-check | `npm run test:template-check` | Structural smoke check that the template's config/spec files are intact | On every push/PR to main/develop, as part of the automatic gate | inferred |
+| smoke | `npm run test:smoke` | Critical-path validation (tests/smoke_tests.spec.js) | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
+| regression | `npm run test:regression` | documentation, download/search, and error-handling suites | Manual dispatch only, pending real Site config (playwright.config.js's placeholder baseURLs) | inferred |
+| links | `npm run test:links` | Link-checker suite | Local only (no CI job) | inferred |
 
 `verified` means setup ran the command here and it worked. `inferred` means the
 repository names the command, but setup did not run it. `unavailable` means the

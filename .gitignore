@@ -47,3 +47,11 @@ Thumbs.db
 !test-results/
 !test-results/**
 # atlas-v3:gitignore:end
+
+# Local-only logs and captured artifacts
+/test-logs.txt
+/smoke-logs.txt
+/screenshots/
+scripts/broken-links-*.csv
+scripts/malformed-paths-*.csv
+node_modules/

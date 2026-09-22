@@ -20,7 +20,8 @@ module.exports = defineConfig({
     {
       name: 'staging',
       use: {
-        baseURL: 'https://www.stage.boost.org',
+        // TODO(Engagement): replace with your actual staging URL
+        baseURL: 'https://staging.example.com',
         browserName: 'chromium',
         headless: true,
         viewport: { width: 1280, height: 720 },
@@ -30,7 +31,8 @@ module.exports = defineConfig({
     {
       name: 'production',
       use: {
-        baseURL: 'https://www.boost.org',
+        // TODO(Engagement): replace with your actual production URL
+        baseURL: 'https://www.example.com',
         browserName: 'chromium',
         headless: true,
         viewport: { width: 1280, height: 720 },
@@ -40,7 +42,8 @@ module.exports = defineConfig({
     {
       name: 'staging-mobile',
       use: {
-        baseURL: 'https://www.stage.boost.org',
+        // TODO(Engagement): replace with your actual staging URL
+        baseURL: 'https://staging.example.com',
         browserName: 'chromium',
         headless: true,
         viewport: { width: 800, height: 600 },
@@ -50,7 +53,8 @@ module.exports = defineConfig({
     {
       name: 'production-mobile',
       use: {
-        baseURL: 'https://www.boost.org',
+        // TODO(Engagement): replace with your actual production URL
+        baseURL: 'https://www.example.com',
         browserName: 'chromium',
         headless: true,
         viewport: { width: 800, height: 600 },
@@ -71,19 +75,6 @@ module.exports = defineConfig({
       },
       timeout: 1800000, // 30 minutes for link checking
       retries: 0, // Don't retry link checks
-    },
-    // Special project for verification tests
-    {
-      name: 'verify',
-      testMatch: ['**/boost-verify.spec.js'],
-      use: {
-        browserName: 'chromium',
-        headless: true,
-        viewport: { width: 1280, height: 720 },
-        trace: 'on-first-retry',
-      },
-      timeout: 90000,
-      retries: 1,
     },
   ],
   use: {

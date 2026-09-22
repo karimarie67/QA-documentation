@@ -1,4 +1,4 @@
-name: QA Test Suite - Boost.org
+name: QA Test Suite
 
 on:
   pull_request:
@@ -33,28 +33,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     name: Smoke Tests (Quick Validation)
-    if: github.event_name == 'pull_request' || github.event_name == 'push' || github.event.inputs.test_suite == 'smoke' || github.event.inputs.test_suite == 'all'
-    
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.test_suite == 'smoke' || github.event.inputs.test_suite == 'all')
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-          
+
       - name: Install dependencies
         run: npm ci
-        
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
-        
+
       - name: Run Smoke Tests
         run: npx playwright test tests/smoke_tests.spec.js --project=staging
         continue-on-error: true
-        
+
       - name: Organize results for dashboard
         if: always()
         shell: bash
@@ -76,7 +76,7 @@ jobs:
             echo "✓ Copying test-results directory"
             cp -r test-results artifacts/smoke-test-results/
           fi
-        
+
       - name: Upload Smoke Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -86,150 +86,33 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
-  regression-tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    name: Regression Tests (Full Validation)
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all'
-    needs: smoke-tests
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-        
-      - name: Run Boost.io Regression Tests
-        run: npx playwright test tests/boost_io_tests.spec.js --project=staging
-        continue-on-error: true
-        
-      - name: Organize results for dashboard
-        if: always()
-        shell: bash
-        run: |
-          mkdir -p artifacts/boost-io-test-results
-          echo "Checking for test-results.json..."
-          if [ -f "test-results.json" ]; then
-            echo "✓ Found test-results.json, copying to boost-io-results.json"
-            cp test-results.json artifacts/boost-io-test-results/boost-io-results.json
-          else
-            echo "✗ test-results.json not found"
-            ls -la
-          fi
-          if [ -d "playwright-report" ]; then
-            echo "✓ Copying playwright-report"
-            cp -r playwright-report artifacts/boost-io-test-results/
-          fi
-          if [ -d "test-results" ]; then
-            echo "✓ Copying test-results directory"
-            cp -r test-results artifacts/boost-io-test-results/
-          fi
-        
-      - name: Upload Boost.io Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: boost-io-test-results
-          path: artifacts/boost-io-test-results/
-          retention-days: 30
-          if-no-files-found: warn
-
-  version-regression-tests:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    name: Version Regression Tests
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all'
-    needs: smoke-tests
-    
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          
-      - name: Install dependencies
-        run: npm ci
-        
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-        
-      - name: Run Version Tests
-        run: npx playwright test tests/boost_version_tests.spec.js --project=staging
-        continue-on-error: true
-        
-      - name: Organize results for dashboard
-        if: always()
-        shell: bash
-        run: |
-          mkdir -p artifacts/version-test-results
-          echo "Checking for test-results.json..."
-          if [ -f "test-results.json" ]; then
-            echo "✓ Found test-results.json, copying to version-results.json"
-            cp test-results.json artifacts/version-test-results/version-results.json
-          else
-            echo "✗ test-results.json not found"
-            ls -la
-          fi
-          if [ -d "playwright-report" ]; then
-            echo "✓ Copying playwright-report"
-            cp -r playwright-report artifacts/version-test-results/
-          fi
-          if [ -d "test-results" ]; then
-            echo "✓ Copying test-results directory"
-            cp -r test-results artifacts/version-test-results/
-          fi
-        
-      - name: Upload Version Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: version-test-results
-          path: artifacts/version-test-results/
-          retention-days: 30
-          if-no-files-found: warn
-
   error-handling-tests:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     name: Error Handling Tests
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all'
-    needs: smoke-tests
-    
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all')
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run Error Handling Tests
         # FORCE JSON OUTPUT
         run: PLAYWRIGHT_JSON_OUTPUT_NAME=test-results.json npx playwright test tests/error_handling_tests.spec.js --project=staging --reporter=json
         continue-on-error: true
-      
+
       - name: Organize results for dashboard
         if: always()
         shell: bash
@@ -237,7 +120,7 @@ jobs:
           mkdir -p artifacts/error-handling-test-results
           if [ -f "test-results.json" ]; then
             cp test-results.json artifacts/error-handling-test-results/error-handling-results.json
-          else 
+          else
             echo "No test-results.json found!"
           fi
           if [ -d "playwright-report" ]; then
@@ -246,7 +129,7 @@ jobs:
           if [ -d "test-results" ]; then
             cp -r test-results artifacts/error-handling-test-results/
           fi
-      
+
       - name: Upload Error Handling Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -260,30 +143,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     name: Download & Search Tests
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all'
-    needs: smoke-tests
-    
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all')
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run Download & Search Tests
         # FORCE JSON OUTPUT
         run: PLAYWRIGHT_JSON_OUTPUT_NAME=test-results.json npx playwright test tests/download_search_tests.spec.js --project=staging --reporter=json
         continue-on-error: true
-      
+
       - name: Organize results for dashboard
         if: always()
         shell: bash
@@ -300,7 +182,7 @@ jobs:
           if [ -d "test-results" ]; then
             cp -r test-results artifacts/download-search-test-results/
           fi
-      
+
       - name: Upload Download & Search Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -314,30 +196,29 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     name: Documentation Tests
-    if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all'
-    needs: smoke-tests
-    
+    if: github.event_name == 'workflow_dispatch' && (github.event.inputs.test_suite == 'regression' || github.event.inputs.test_suite == 'all')
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-      
+
       - name: Install dependencies
         run: npm ci
-      
+
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      
+
       - name: Run Documentation Tests
         # FORCE JSON OUTPUT
         run: PLAYWRIGHT_JSON_OUTPUT_NAME=test-results.json npx playwright test tests/documentation_tests.spec.js --project=staging --reporter=json
         continue-on-error: true
-      
+
       - name: Organize results for dashboard
         if: always()
         shell: bash
@@ -354,7 +235,7 @@ jobs:
           if [ -d "test-results" ]; then
             cp -r test-results artifacts/documentation-test-results/
           fi
-      
+
       - name: Upload Documentation Test Results
         if: always()
         uses: actions/upload-artifact@v4
@@ -364,31 +245,71 @@ jobs:
           retention-days: 30
           if-no-files-found: warn
 
+  unit-tests:
+    runs-on: ubuntu-latest
+    name: Unit Tests
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Unit Tests
+        run: npm run test:unit
+
+  template-check:
+    runs-on: ubuntu-latest
+    name: Template Structural Check
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Template Structural Check
+        run: npm run test:template-check
+
   update-dashboard:
     runs-on: ubuntu-latest
-    needs: [smoke-tests, regression-tests, version-regression-tests, error-handling-tests, download-search-tests, documentation-tests]
-    if: always()
+    needs: [smoke-tests, error-handling-tests, download-search-tests, documentation-tests]
+    if: always() && github.event_name == 'workflow_dispatch'
     name: Update QA Dashboard
     permissions:
       contents: write
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: ./artifacts
         continue-on-error: true
-        
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          
+
       - name: List downloaded artifacts for debugging
         run: |
           echo "=== Artifacts structure ==="
@@ -396,12 +317,10 @@ jobs:
           echo ""
           echo "=== Checking for specific result files ==="
           [ -f "./artifacts/smoke-test-results/smoke-results.json" ] && echo "✓ Found smoke-results.json" || echo "✗ Missing smoke-results.json"
-          [ -f "./artifacts/boost-io-test-results/boost-io-results.json" ] && echo "✓ Found boost-io-results.json" || echo "✗ Missing boost-io-results.json"
-          [ -f "./artifacts/version-test-results/version-results.json" ] && echo "✓ Found version-results.json" || echo "✗ Missing version-results.json"
           [ -f "./artifacts/error-handling-test-results/error-handling-results.json" ] && echo "✓ Found error-handling-results.json" || echo "✗ Missing error-handling-results.json"
           [ -f "./artifacts/download-search-test-results/download-search-results.json" ] && echo "✓ Found download-search-results.json" || echo "✗ Missing download-search-results.json"
           [ -f "./artifacts/documentation-test-results/documentation-results.json" ] && echo "✓ Found documentation-results.json" || echo "✗ Missing documentation-results.json"
-          
+
       - name: Generate Dashboard
         run: |
           node dashboards/scripts/generate-dashboard.js
@@ -410,7 +329,7 @@ jobs:
           GITHUB_RUN_ID: ${{ github.run_id }}
           GITHUB_RUN_NUMBER: ${{ github.run_number }}
           GITHUB_REF: ${{ github.ref }}
-          
+
       - name: Commit Dashboard Updates
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"

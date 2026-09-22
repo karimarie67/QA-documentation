@@ -1,1 +1,1 @@
-{"text":"🚨 **Boost.org QA Alert**","blocks":[{"type":"section","text":{"type":"mrkdwn","text":"*1 Tests Failed* on `main`\n<https://github.com/karimarie67/QA-documentation/actions/runs/28593134600|View Dashboard>"}}]}
+{"text":"🚨 **QA Alert**","blocks":[{"type":"section","text":{"type":"mrkdwn","text":"*21 Tests Failed* on `issue-6/genericize-template`\n<https://github.com/karimarie67/QA-documentation/actions/runs/35767617795|View Dashboard>"}}]}

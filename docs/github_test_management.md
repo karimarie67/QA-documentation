@@ -293,14 +293,14 @@ jobs:
       - name: Checkout dashboard repo
         uses: actions/checkout@v4
         with:
-          repository: boostorg/qa-dashboard
+          repository: <your-org>/<your-repo>
           token: ${{ secrets.DASHBOARD_TOKEN }}
       
       - name: Fetch test results
         run: |
           # Fetch latest test results from GitHub Actions API
           curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            "https://api.github.com/repos/boostorg/website-v2/actions/runs" \
+            "https://api.github.com/repos/<your-org>/<your-repo>/actions/runs" \
             > test-runs.json
       
       - name: Update dashboard data
@@ -376,8 +376,8 @@ async function migrateTestCases() {
   
   for (const test of existingTests) {
     const issue = await octokit.rest.issues.create({
-      owner: 'boostorg',
-      repo: 'website-v2',
+      owner: '<your-org>',
+      repo: '<your-repo>',
       title: `${test.id} - ${test.title}`,
       body: formatTestCaseBody(test),
       labels: generateLabels(test)
@@ -441,8 +441,8 @@ class TestMetrics {
   
   async getTestCaseMetrics() {
     const issues = await this.octokit.rest.issues.listForRepo({
-      owner: 'boostorg',
-      repo: 'website-v2',
+      owner: '<your-org>',
+      repo: '<your-repo>',
       labels: 'test-case',
       state: 'all',
       per_page: 100
@@ -480,8 +480,8 @@ class TestMetrics {
   
   async getExecutionMetrics() {
     const runs = await this.octokit.rest.actions.listWorkflowRuns({
-      owner: 'boostorg',
-      repo: 'website-v2',
+      owner: '<your-org>',
+      repo: '<your-repo>',
       workflow_id: 'playwright-e2e.yml',
       per_page: 50
     });
